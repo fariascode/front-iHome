@@ -1,0 +1,35 @@
+.fixed-color {
+    background-color: #ffffff;
+  }
+
+  .fixed-buttom {
+    background-color: #89888C;
+    color: #ffffff;
+  }
+
+  .fixed-input {
+    background-color: #89888C;
+    color: #ffffff;
+  }
+
+@font-face {
+    font-family: 'ihome';
+    src: url('/assets/fonts/NotoSerif_Condensed-Bold.ttf') format('ttf');
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .letter-logo {
+    font-family: 'ihome';
+  }
+  
+  @font-face {
+    font-family: 'ihome2';
+    src: url('/assets/fonts/Michroma-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+ 
+  .letter-normal {
+    font-family: 'ihome2';
+  }

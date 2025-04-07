@@ -1,0 +1,58 @@
+<section class="relative w-full h-screen bg-gradient-to-br from-blue-100 via-white to-blue-200">
+  <div class="relative z-10 flex items-center justify-center h-full px-4">
+    <div class="bg-white bg-opacity-95 rounded-lg shadow-lg p-8 w-full max-w-md">
+      
+      <!-- Logo HOME -->
+      <div class="flex justify-center mb-2">
+        <h1 class="text-4xl font-semibold text-gray-800 tracking-[0.2em]">iHOME</h1>
+      </div>
+
+      <!-- Subtítulo LOGIN -->
+      <div class="flex justify-center mb-6">
+        <h2 class="text-lg text-gray-600 font-medium tracking-wide">LOGIN</h2>
+      </div>
+
+      <!-- Línea superior -->
+      <div class="bg-[#C9C39A] h-[2px] w-full mb-6 rounded"></div>
+
+      <!-- Formulario -->
+      <form (ngSubmit)="login()" class="space-y-6">
+        <div>
+          <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Correo Electrónico</label>
+          <input
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Ingrese su correo"
+            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="password" class="block text-gray-700 text-sm font-medium mb-1">Contraseña</label>
+          <input
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Ingrese su contraseña"
+            minlength="8"
+            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div class="flex justify-between items-center pt-4">
+          <a routerLink="/register" class="text-sm text-blue-600 hover:underline">Crear cuenta</a>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition duration-200">
+            Iniciar sesión
+          </button>
+        </div>
+      </form>
+
+      <!-- Línea inferior -->
+      <div class="bg-[#C9C39A] h-[2px] w-full mt-6 rounded"></div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,1 @@
+export const pollingIntervalTime: number = 9*1000;

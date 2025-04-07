@@ -1,0 +1,27 @@
+@if (proximityData) {
+<mat-card class="gap-5 p-2 flex flex-col justify-between col-span-2">
+    <mat-card-header>
+        <mat-card-title class="text-xl font-medium">Proximidad</mat-card-title>
+        <mat-card-subtitle><strong class="font-medium">Última Lectura:</strong> {{proximityData.registeredDate |
+            date:"short"}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        @for (read of proximityData.readings; track $index) {
+        <div matTooltip="Proximidad" matTooltipShowDelay="250" matTooltipHideDelay="300" matTooltipPosition="above" class="w-11/12 py-2 flex items-center justify-center gap-5 mx-auto rounded-sm bg-gradient-to-tl to-orange-500 via-orange-400 from-orange-300   text-white">
+            <mat-icon>waves</mat-icon>
+            <span>
+                {{read.value}} {{read.measurementUnit}}
+            </span>
+
+        </div>
+        }
+    </mat-card-content>
+    <mat-card-footer class="w-full flex items-center justify-center">
+
+        <button matTooltip="Ver todos los registros." matTooltipPosition="below" mat-flat-button color="primary" 
+            (click)="seeMore()">Ver
+             más</button>
+
+    </mat-card-footer>
+</mat-card>
+}

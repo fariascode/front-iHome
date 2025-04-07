@@ -1,0 +1,46 @@
+<section>
+  <div>
+    <!-- Fondo blanco translúcido -->
+    <div class="bg-white bg-cover" style="position: fixed; width: 100%; height: 100%; z-index: -100; opacity: 0.55;"></div>
+
+    <!-- Título HOME -->
+    <div class="flex flex-col md:flex-row items-center md:justify-start">
+      <h1 class="text-black text-2xl sm:text-4xl lg:text-6xl letter-logo ml-10 md:ml-28 mt-4 md:mt-6" style="letter-spacing: 0.2em;">HOME</h1>
+      <!-- Dashboard (opcional) -->
+      <!-- <h2 class="text-black text-xl sm:text-3xl lg:text-5xl letter-normal ml-auto mr-10 md:mr-28 mt-2 md:mt-0" style="letter-spacing: 0.1em;">Dashboard</h2> -->
+    </div>
+
+    <!-- Línea horizontal superior -->
+    <div class="bg-[#C9C39A] mx-[5%]" style="height: 2px; margin-top: 1rem;"></div>
+
+    <!-- Panel de datos -->
+    <div class="flex flex-col md:flex-row items-center justify-between mt-4 px-6">
+
+      <!-- PRESENT MODE -->
+      <div class="text-center md:text-left md:ml-12 lg:ml-28 mb-4 md:mb-0">
+        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">PRESENT MODE</h3>
+        <h4 class="text-black text-sm lg:text-lg tracking-wide mt-1">{{ currentTime }}</h4>
+      </div>
+
+      <!-- TEMPERATURE -->
+      <div class="flex flex-col items-center text-center mb-4 md:mb-0">
+        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">TEMPERATURE</h3>
+        <h4 *ngIf="temperaturaData !== undefined" class="text-black text-2xl sm:text-3xl lg:text-4xl font-semibold mt-1">
+          {{ temperaturaData }}<span class="text-black text-xl md:text-2xl">ºC</span>
+        </h4>
+      </div>
+
+      <!-- Línea vertical mejorada -->
+      <div class="hidden md:block bg-[#C9C39A] w-[3px] h-20 mx-4"></div>
+
+      <!-- DÍA -->
+      <div class="flex flex-col items-center text-center md:mr-12 lg:mr-28">
+        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide mb-2">DAY</h3>
+        <img src="assets/image/sun.jpg" class="h-10 sm:h-12 lg:h-16 object-contain" />
+      </div>
+    </div>
+
+    <!-- Línea horizontal inferior -->
+    <div class="bg-[#C9C39A] mx-[5%]" style="height: 2px; margin-top: 1.5rem;"></div>
+  </div>
+</section>

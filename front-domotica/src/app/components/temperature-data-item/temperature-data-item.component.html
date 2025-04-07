@@ -1,0 +1,49 @@
+<section>
+    <!-- Línea horizontal superior -->
+    <div class="bg-[#C9C39A] mx-[5%]" style="height: 2px; margin-top: 1rem;"></div>
+  
+    <!-- Panel de lectura alineado estilo moderno -->
+    <div class="flex flex-col md:flex-row items-center justify-between mt-4 px-6">
+  
+      @if (dhtData) {
+  
+        <!-- Última lectura -->
+        <div class="text-center md:text-left md:ml-12 lg:ml-28 mb-4 md:mb-0">
+          <h3 class="text-white letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">ÚLTIMA LECTURA</h3>
+          <h4 class="text-white text-sm lg:text-lg tracking-wide mt-1">
+            {{ dhtData.registeredDate | date: "short" }}
+          </h4>
+        </div>
+  
+        @for (read of dhtData.readings; track $index) {
+          @if (read.name.toLowerCase().includes("temperatura")) {
+            <!-- Temperatura -->
+            <div class="flex flex-col items-center text-center mb-4 md:mb-0">
+              <h3 class="text-white letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">TEMPERATURA</h3>
+              <h4 class="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold mt-1">
+                {{ read.value }}<span class="text-white text-xl md:text-2xl">ºC</span>
+              </h4>
+            </div>
+  
+            <!-- Línea vertical -->
+            <div class="hidden md:block bg-[#C9C39A] w-[3px] h-20 mx-4"></div>
+          }
+        }
+  
+        @for (read of dhtData.readings; track $index) {
+          @if (!read.name.toLowerCase().includes("temperatura")) {
+            <!-- Humedad -->
+            <div class="flex flex-col items-center text-center md:mr-12 lg:mr-28">
+              <h3 class="text-white letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">HUMEDAD</h3>
+              <h4 class="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold mt-1">
+                {{ read.value }}<span class="text-white text-xl md:text-2xl">%</span>
+              </h4>
+            </div>
+          }
+        }
+      }
+    </div>
+  
+    <!-- Línea horizontal inferior -->
+    <div class="bg-[#C9C39A] mx-[5%]" style="height: 2px; margin-top: 1.5rem;"></div>
+  </section>

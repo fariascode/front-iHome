@@ -1,0 +1,86 @@
+<section>
+    <!-- Fondo de la página -->
+    <div>
+        <img src="assets/image/bedroomwallpaper.jpg" class="bg-cover"
+            style="position: fixed; width: 100%; height: 100%; z-index: -100; opacity: 0.80;">
+        <div class="bg-black bg-cover"
+            style="position: fixed; width: 100%; height: 100%; z-index: -100; opacity: 0.65;"></div>
+
+        <!-- Encabezado con el nombre -->
+        <div class="flex flex-col md:flex-row">
+            <h1 class="text-white text-2xl sm:text-4xl lg:text-6xl letter-logo ml-44 md:text-6xl md:ml-28 mt-2 md:mt-0"
+                style="letter-spacing: 0.2em;">iHOME</h1>
+            <h2 class="text-white text-xl sm:text-3xl lg:text-5xl letter-normal ml-[45%] md:text-5xl md:ml-auto md:mr-28 mt-2 md:mt-0"
+                style="letter-spacing: 0.1em;">{{ bedroomName }}</h2>
+        </div>
+
+        <!-- Contenedor principal -->
+        <div class="ml-[5%] mr-[5%]" style="position: relative; height: 80%; margin-top: 0.2em; padding-bottom: 0.1rem;">
+            <!-- Datos de temperatura si existen -->
+            @if (dhtData) {
+                <app-temperature-data-item 
+                    [dht-data]="dhtData"
+                    component-room-name="bedrooms"
+                    [component-location]="dhtData.location"
+                    [component-name]="dhtData.name"/>
+            }
+        </div>
+    </div>
+    <br/>
+    <!-- Sección de actuadores -->
+    <div class="flex flex-col md:flex-row justify-center">
+        <!-- Columna 1 -->
+        <div class="flex flex-col md:flex-row">
+            <app-door-data-item 
+                [door-data]="doorData" 
+                [component-room-name]="room" 
+                [component-location]="'someLocation'" 
+                [component-name]="'Puerta'" 
+                (actuator-updated)="onActuatorUpdate()"/>
+            
+            <app-in-light-data-item
+                [inlight-data]="inLightData" 
+                [component-room-name]="room" 
+                [component-location]="'someLocation'" 
+                [component-name]="'Releay'" 
+                (actuator-updated)="onActuatorUpdate()"/>
+        </div>
+
+        <!-- Columna 2 -->
+        <div class="flex flex-col md:flex-row">
+            <app-window-double-data-item
+                [windowDoubleData]="windowDoubleData" 
+                [component-room-name]="room" 
+                [component-location]="'someLocation'" 
+                [component-name]="'Ventana_Derecha'" 
+                (actuator-updated)="onActuatorUpdate()"/>
+            
+            <app-window-left-data-item
+                class="lg:ml-[5em]"
+                [windowLeftData]="windowLeftData" 
+                [component-room-name]="room" 
+                [component-location]="'someLocation'" 
+                [component-name]="'Ventana_Izquierda'" 
+                (actuator-updated)="onActuatorUpdate()"/>
+        </div>
+    </div>
+
+    <br/>
+
+    <!-- Sección de ventilador y luz exterior -->
+    <div class="flex flex-col md:flex-row justify-center">
+        <app-fan-data-item
+            [fan-data]="fanData" 
+            [component-room-name]="room" 
+            [component-location]="'someLocation'" 
+            [component-name]="'Ventilador'" 
+            (actuator-updated)="onActuatorUpdate()"/>
+
+        <app-ex-light-data-item
+            [exlight-data]="exLightData" 
+            [component-room-name]="room" 
+            [component-location]="'someLocation'" 
+            [component-name]="'Luz Exterior'" 
+            (actuator-updated)="onActuatorUpdate()"/>
+    </div>
+</section>

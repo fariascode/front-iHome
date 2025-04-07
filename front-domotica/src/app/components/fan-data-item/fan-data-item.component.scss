@@ -1,0 +1,112 @@
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 4em;
+    height: 2em;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #89888C;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 1.5em;
+    width: 1.5em;
+    left: 0.3em;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #8C6E35;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+  
+
+
+
+
+.sliderr-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  left: 1em;
+}
+
+.sliderr {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80%;
+  height: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.sliderr:hover {
+  opacity: 1;
+}
+
+.sliderr::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #e8bd47;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid;
+}
+
+.sliderr::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #e8bd47;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid;
+}
+
+#sliderr-value {
+  position: absolute;
+  top: -30px;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+
+  
+ 
+
+  
+  
+  
+
+  

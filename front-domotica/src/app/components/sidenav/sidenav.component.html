@@ -1,0 +1,93 @@
+<nav class="w-full flex flex-col gap-4 px-4 py-6 bg-[#1E1E1E] rounded-2xl shadow-md">
+
+    <!-- BOTÓN INICIO -->
+    <mat-card
+  class="flex items-center gap-4 w-full lg:w-[85%] mx-auto px-5 py-4 bg-[#121212] hover:bg-[#1f1f1f] cursor-pointer rounded-xl shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
+  routerLink="/home/">
+
+  <mat-icon class="text-[#EBC031] text-3xl transition-transform duration-200 group-hover:rotate-6">home</mat-icon>
+
+  <h1 class="font-semibold text-lg lg:text-xl text-white tracking-wide">
+    Inicio
+  </h1>
+</mat-card>
+
+  
+    <!-- Línea decorativa -->
+    <mat-divider class="bg-[#EBC031] opacity-30"></mat-divider>
+  
+    <!-- SECCIÓN: RECÁMARAS -->
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center gap-2 text-white font-semibold text-sm tracking-wide uppercase ml-2 mt-2">
+        <mat-icon class="text-[#EBC031]">bed</mat-icon> Recámaras
+      </div>
+      @for (bedroom of rooms.bedrooms; track $index) {
+        <app-sidenav-grid-item
+          [title-room]="bedroom"
+          routerLink="/bedroom/{{bedroom}}"
+          routerLinkActive="text-[#EBC031] scale-105 font-semibold" />
+      }
+    </div>
+  
+    <mat-divider class="bg-[#EBC031] opacity-30"></mat-divider>
+  
+    <!-- SECCIÓN: BAÑOS -->
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center gap-2 text-white font-semibold text-sm tracking-wide uppercase ml-2 mt-2">
+        <mat-icon class="text-[#EBC031]">bathroom</mat-icon> Baños
+      </div>
+      @for (bathroom of rooms.bathrooms; track $index) {
+        <app-sidenav-grid-item
+          [title-room]="bathroom"
+          routerLink="/bathroom/{{bathroom}}"
+          routerLinkActive="text-[#EBC031] scale-105 font-semibold" />
+      }
+    </div>
+  
+    <mat-divider class="bg-[#EBC031] opacity-30"></mat-divider>
+  
+    <!-- SECCIÓN: COCINA -->
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center gap-2 text-white font-semibold text-sm tracking-wide uppercase ml-2 mt-2">
+        <mat-icon class="text-[#EBC031]">restaurant</mat-icon> Cocina
+      </div>
+      @for (kitchen of rooms.kitchens; track $index) {
+        <app-sidenav-grid-item
+          [title-room]="kitchen"
+          routerLink="/kitchen/{{kitchen}}"
+          routerLinkActive="text-[#EBC031] scale-105 font-semibold" />
+      }
+    </div>
+  
+    <mat-divider class="bg-[#EBC031] opacity-30"></mat-divider>
+  
+    <!-- SECCIÓN: SALA -->
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center gap-2 text-white font-semibold text-sm tracking-wide uppercase ml-2 mt-2">
+        <mat-icon class="text-[#EBC031]">weekend</mat-icon> Sala
+      </div>
+      @for (livingroom of rooms.livingrooms; track $index) {
+        <app-sidenav-grid-item
+          [title-room]="livingroom"
+          routerLink="/livingroom/{{livingroom}}"
+          routerLinkActive="text-[#EBC031] scale-105 font-semibold" />
+      }
+    </div>
+  
+    <mat-divider class="bg-[#EBC031] opacity-30"></mat-divider>
+  
+    <!-- SECCIÓN: GARAJE -->
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center gap-2 text-white font-semibold text-sm tracking-wide uppercase ml-2 mt-2">
+        <mat-icon class="text-[#EBC031]">garage</mat-icon> Garaje
+      </div>
+      @for (garage of rooms.garages; track $index) {
+        <app-sidenav-grid-item
+          [title-room]="garage"
+          routerLink="/garage/{{garage}}"
+          routerLinkActive="text-[#EBC031] scale-105 font-semibold" />
+      }
+    </div>
+  
+  </nav>
+  

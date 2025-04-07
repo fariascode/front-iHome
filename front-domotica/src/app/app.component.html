@@ -1,0 +1,16 @@
+<app-header (toggleSidenav)="toggleSidenav()"></app-header>
+<mat-sidenav-container class="overflow-hidden h-full"  hasBackdrop="true">
+    <mat-sidenav #sidenav mode="over" class="w-full md:w-3/4 xl:w-1/4 p-4 bg-[#C9C39A]" style="opacity: 0.90;">
+        <app-sidenav>
+            <button mat-button (click)="toggleSidenav()">Toggle</button>
+        </app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <main class="h-custom">
+            <app-loader class="flex justify-center items-center fixed top-0 left-0 "/>
+            <router-outlet class="h-custom"/>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container> 
+<!-- <a routerLink="/dashboard"></a>
+    <router-outlet></router-outlet> -->

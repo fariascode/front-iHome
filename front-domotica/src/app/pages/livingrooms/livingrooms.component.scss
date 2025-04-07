@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'ihome';
+    src: url('/assets/fonts/NotoSerif_Condensed-Bold.ttf') format('ttf');
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .letter-logo {
+    font-family: 'ihome';
+  }
+  
+  @font-face {
+    font-family: 'ihome2';
+    src: url('/assets/fonts/Merriweather-Bold.ttf') format('ttf');
+    font-weight: bold;
+    font-style: norma;
+  }
+ 
+  .letter-normal {
+    font-family: 'ihome2';
+  }

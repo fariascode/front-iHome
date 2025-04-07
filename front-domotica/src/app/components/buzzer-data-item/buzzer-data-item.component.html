@@ -1,0 +1,28 @@
+@if (buzzerData){
+    <mat-card class="gap-5 p-2 flex flex-col justify-between col-span-2">
+        <mat-card-header class="mt-4">
+            <mat-card-title class="text-xl font-medium">Alarma</mat-card-title>
+            <mat-card-subtitle><strong class="font-medium">Última Lectura:</strong> {{buzzerData.registeredDate|
+                date:"short"}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            @for (action of buzzerData.actions; track $index) {
+
+            @if (action.value == true) {
+                <div
+             matTooltip="Alarma activada"  matTooltipPosition="above" 
+            class="w-11/12 py-2 flex items-center justify-center gap-5 mx-auto rounded-sm bg-gradient-to-tl from-green-300 via-green-400 to-green-500 text-white"><span>Alarma</span> <mat-icon>circle_notifications</mat-icon></div>
+            } @else {
+                <div matTooltip="Alarma desactivada"  matTooltipPosition="above" 
+                class="w-11/12 py-2 flex items-center justify-center gap-5 mx-auto rounded-sm bg-gradient-to-tl from-gray-300 via-gray-400 to-gray-500 text-white"><span>Alarma</span> </div>
+            }
+
+            }
+        </mat-card-content>
+        <mat-card-footer class="w-full flex items-center justify-center">
+            <button matTooltip="Ver todos los registros." matTooltipPosition="below" mat-flat-button color="primary"
+            (click)="seeMore()">Ver
+            más</button>
+        </mat-card-footer>
+    </mat-card>
+    }

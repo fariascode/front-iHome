@@ -1,0 +1,74 @@
+// Estilos globales para la tabla
+.table-container {
+    background-image: url('https://th.bing.com/th/id/R.e14dc66fb0542dc5ccd36cd9c12be58d?rik=SV49xmzJodufaQ&riu=http%3a%2f%2fwww.construyehogar.com%2fwp-content%2fuploads%2f2015%2f11%2fDise%c3%b1o-de-casa-moderna-de-una-planta.jpg&ehk=qCU3c5YRoYlaKXZqWaPDLdsjTi1tBP6g65%2bwCrXNG2M%3d&risl=&pid=ImgRaw&r=0'); 
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8); // Fondo blanco con opacidad para resaltar sobre el fondo
+    border-radius: 8px;
+    overflow: hidden;
+  
+    th, td {
+      padding: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+    }
+  
+    th {
+      background-color: #4a90e2; // Azul para los encabezados
+      color: white;
+      font-weight: bold;
+    }
+  
+    tr:nth-child(even) {
+      background-color: #f4f4f4; // Color gris claro para las filas pares
+    }
+  
+    tr:hover {
+      background-color: #e1e1e1; // Resalta la fila al pasar el mouse
+    }
+  
+    td {
+      background-color: #fff;
+      color: #555;
+    }
+  
+    // Bordes
+    th, td {
+      border-bottom: 1px solid #ccc; // Bordes sutiles
+    }
+  }
+  
+  // Estilos específicos para las cabeceras de las tablas
+  h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #4a90e2;
+    margin-top: 20px;
+    text-transform: uppercase;
+  }
+  
+  // Responsividad para la tabla en pantallas pequeñas
+  @media (max-width: 768px) {
+    table {
+      font-size: 12px;
+    }
+  
+    th, td {
+      padding: 10px;
+    }
+  
+    h2 {
+      font-size: 20px;
+    }
+  }
+  

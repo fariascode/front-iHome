@@ -1,0 +1,20 @@
+<div class="flex flex-col md:flex-row" style="display: flex;">
+    @if (dhtData) {
+        <div>
+            <h3 class="text-black letter-normal mt-2 ml-14 md:ml-28 text-sm sm:text-lg lg:text-xl" style="letter-spacing: 0.1em; margin-top: 0.1em;">PRESENT MODE</h3>
+            <h4 class="text-black text-sm lg:text-lg letter-normal mt-2 ml-14 md:ml-28" style="letter-spacing: 0.1em; margin-top: 0.2em;">{{dhtData.registeredDate | date:"short"}}</h4>
+        </div>
+        @for (read of dhtData.readings; track $index) {
+            @if (read.name.toLowerCase().includes("temperatura")) {
+                <div class="flex items-center ml-14 md:ml-96 md:mr-[auto]">
+                    <div style="margin-top: 0.2em;">
+                        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl" style="letter-spacing: 0.1em;">TEMPERATURE</h3>
+                        <h4 class="text-black text-2xl sm:text-3xl lg:text-4xl letter-normal md:text-4xl ml-5" style="letter-spacing: 0.1em;">{{ read.value }}
+                            <span class="text-black text-xl md:text-2xl">ºC</span>
+                        </h4>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
