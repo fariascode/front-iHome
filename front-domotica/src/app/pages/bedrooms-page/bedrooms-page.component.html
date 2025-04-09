@@ -27,60 +27,61 @@
         </div>
     </div>
     <br/>
-    <!-- Sección de actuadores -->
-    <div class="flex flex-col md:flex-row justify-center">
-        <!-- Columna 1 -->
-        <div class="flex flex-col md:flex-row">
-            <app-door-data-item 
-                [door-data]="doorData" 
-                [component-room-name]="room" 
-                [component-location]="'someLocation'" 
-                [component-name]="'Puerta'" 
-                (actuator-updated)="onActuatorUpdate()"/>
+    
+    <!-- Sección de actuadores - 4 arriba y 2 abajo -->
+    <div class="flex flex-col gap-6 mt-6 ml-[5%] mr-[5%]">
+        <!-- Fila superior con 4 actuadores (2 grupos de 2) -->
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- Grupo 1 -->
+            <div class="flex flex-col md:flex-row gap-6">
+                <app-door-data-item 
+                    [door-data]="doorData" 
+                    [component-room-name]="room" 
+                    [component-location]="'someLocation'" 
+                    [component-name]="'Puerta'" 
+                    (actuator-updated)="onActuatorUpdate()" />
             
-            <app-in-light-data-item
-                [inlight-data]="inLightData" 
-                [component-room-name]="room" 
-                [component-location]="'someLocation'" 
-                [component-name]="'Releay'" 
-                (actuator-updated)="onActuatorUpdate()"/>
-        </div>
-
-        <!-- Columna 2 -->
-        <div class="flex flex-col md:flex-row">
-            <app-window-double-data-item
-                [windowDoubleData]="windowDoubleData" 
-                [component-room-name]="room" 
-                [component-location]="'someLocation'" 
-                [component-name]="'Ventana_Derecha'" 
-                (actuator-updated)="onActuatorUpdate()"/>
+                <app-in-light-data-item
+                    [inlight-data]="inLightData" 
+                    [component-room-name]="room" 
+                    [component-location]="'someLocation'" 
+                    [component-name]="'Releay'" 
+                    (actuator-updated)="onActuatorUpdate()" />
+            </div>
             
-            <app-window-left-data-item
-                class="lg:ml-[5em]"
-                [windowLeftData]="windowLeftData" 
+            <!-- Grupo 2 -->
+            <div class="flex flex-col md:flex-row gap-6">
+                <app-window-double-data-item
+                    [windowDoubleData]="windowDoubleData" 
+                    [component-room-name]="room" 
+                    [component-location]="'someLocation'" 
+                    [component-name]="'Ventana_Derecha'" 
+                    (actuator-updated)="onActuatorUpdate()" />
+            
+                <app-window-left-data-item
+                    [windowLeftData]="windowLeftData" 
+                    [component-room-name]="room" 
+                    [component-location]="'someLocation'" 
+                    [component-name]="'Ventana_Izquierda'" 
+                    (actuator-updated)="onActuatorUpdate()" />
+            </div>
+        </div>
+        
+        <!-- Fila inferior con 2 actuadores centrados -->
+        <div class="flex justify-center gap-6">
+            <app-fan-data-item
+                [fan-data]="fanData" 
                 [component-room-name]="room" 
                 [component-location]="'someLocation'" 
-                [component-name]="'Ventana_Izquierda'" 
-                (actuator-updated)="onActuatorUpdate()"/>
+                [component-name]="'Ventilador'" 
+                (actuator-updated)="onActuatorUpdate()" />
+        
+            <app-ex-light-data-item
+                [exlight-data]="exLightData" 
+                [component-room-name]="room" 
+                [component-location]="'someLocation'" 
+                [component-name]="'Luz Exterior'" 
+                (actuator-updated)="onActuatorUpdate()" />
         </div>
-    </div>
-
-    <br/>
-
-    <!-- Sección de ventilador y luz exterior -->
-    <div class="flex flex-col md:flex-row justify-center">
-        <app-fan-data-item
-            [fan-data]="fanData" 
-            [component-room-name]="room" 
-            [component-location]="'someLocation'" 
-            [component-name]="'Ventilador'" 
-            (actuator-updated)="onActuatorUpdate()"/>
-
-        <app-ex-light-data-item
-            [exlight-data]="exLightData" 
-            [component-room-name]="room" 
-            [component-location]="'someLocation'" 
-            [component-name]="'Luz Exterior'" 
-            (actuator-updated)="onActuatorUpdate()"/>
     </div>
 </section>
