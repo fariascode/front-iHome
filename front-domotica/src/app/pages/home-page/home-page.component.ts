@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-
 import { LoadingService } from '../../core/services/Loading/loading.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { RoomsService } from '../../core/services/Rooms/rooms.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { iApiResponse } from '../../core/interfaces/i-ApiResponse';
 import { pollingIntervalTime } from '../../core/constants/pollingInterval';
 import { MatMenuModule } from '@angular/material/menu';
@@ -43,14 +42,15 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
   temperaturaData: number | undefined;
   private subscription: Subscription = new Subscription();
   private pollingInterval: any;
-  private chartRoot!: am5.Root;
   currentTime: string = '';
   public rooms: any = {};
+  tablaData: { fecha: string, hora: string, temperatura: number, estado: string }[] = [];
 
   constructor(
     private roomsService: RoomsService,
     private loadingService: LoadingService,
-    public dataService: DataService
+    public dataService: DataService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -62,65 +62,13 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.subscription.add(
       this.dataService.temperature$.subscribe(data => {
-        console.log('TEMPERATURA RECIBIDA:', data);
         this.temperaturaData = data;
       })
     );
   }
 
   ngAfterViewInit(): void {
-    // === Gráfica de línea: Temperatura Histórica ===
-    this.chartRoot = am5.Root.new("amchart-container");
-    this.chartRoot.setThemes([am5themes_Animated.new(this.chartRoot)]);
-
-    const chart = this.chartRoot.container.children.push(
-      am5xy.XYChart.new(this.chartRoot, {
-        panX: true,
-        panY: true,
-        wheelX: "panX",
-        wheelY: "zoomX",
-        layout: this.chartRoot.verticalLayout
-      })
-    );
-
-    const xAxis = chart.xAxes.push(
-      am5xy.DateAxis.new(this.chartRoot, {
-        baseInterval: { timeUnit: "day", count: 1 },
-        renderer: am5xy.AxisRendererX.new(this.chartRoot, {})
-      })
-    );
-
-    const yAxis = chart.yAxes.push(
-      am5xy.ValueAxis.new(this.chartRoot, {
-        renderer: am5xy.AxisRendererY.new(this.chartRoot, {})
-      })
-    );
-
-    const series = chart.series.push(
-      am5xy.LineSeries.new(this.chartRoot, {
-        name: "Temperatura",
-        xAxis: xAxis,
-        yAxis: yAxis,
-        valueYField: "value",
-        valueXField: "date",
-        tooltip: am5.Tooltip.new(this.chartRoot, {
-          labelText: "{valueY} ºC"
-        })
-      })
-    );
-
-    series.data.setAll([
-      { date: new Date(2025, 3, 6).getTime(), value: 22 },
-      { date: new Date(2025, 3, 7).getTime(), value: 24 },
-      { date: new Date(2025, 3, 8).getTime(), value: 26 },
-      { date: new Date(2025, 3, 9).getTime(), value: 25 },
-      { date: new Date(2025, 3, 10).getTime(), value: 23 }
-    ]);
-
-    series.appear(1000);
-    chart.appear(1000, 100);
-
-    // === NUEVA: Gráfica de Barras ===
+    // === Gráfica de Barras Dinámica ===
     const barChartRoot = am5.Root.new("bar-chart-container");
     barChartRoot.setThemes([am5themes_Animated.new(barChartRoot)]);
 
@@ -158,14 +106,10 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
       })
     );
 
-    const barChartData = [
-      { room: "Recámara 1", value: 24.5 },
-      { room: "Recámara 2", value: 22.8 },
-      { room: "Recámara 3", value: 25.1 }
-    ];
-
-    columnSeries.data.setAll(barChartData);
-    categoryAxis.data.setAll(barChartData);
+    this.getTemperaturasPorHabitacion().then(barChartData => {
+      columnSeries.data.setAll(barChartData);
+      categoryAxis.data.setAll(barChartData);
+    });
 
     columnSeries.appear(1000);
     barChart.appear(1000, 100);
@@ -178,6 +122,83 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
         url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
       }
     });
+
+    // Llenar datos dinámicos en tabla
+    this.getDatosParaTabla();
+  }
+
+  getTemperaturasPorHabitacion(): Promise<{ room: string, value: number }[]> {
+    const urls = [
+      { name: 'Recámara 1', url: 'http://localhost:3000/api/v1/bedrooms/last?location=Recámara 1' },
+      { name: 'Recámara 2', url: 'http://localhost:3000/api/v1/bedrooms/last?location=Recámara 2' },
+      { name: 'Sala',       url: 'http://localhost:3000/api/v1/livingrooms/last?location=Sala' }
+    ];
+  
+    const requests = urls.map(loc =>
+      fetch(loc.url)
+        .then(res => res.json())
+        .then(data => {
+          const sensor = data.sensorsData?.find((s: any) => s.lastRecord?.readings);
+          const lectura = sensor?.lastRecord.readings.find((r: any) =>
+            r.name.toLowerCase().includes('temperatura')
+          );
+          return {
+            room: loc.name,
+            value: lectura?.value ?? 0
+          };
+        })
+        .catch(() => ({ room: loc.name, value: 0 }))
+    );
+  
+    return Promise.all(requests);
+  }  
+
+  getDatosParaTabla(): Promise<void> {
+    const urls = [
+      { name: 'Recámara 1', url: 'http://localhost:3000/api/v1/bedrooms/last?location=Recámara 1' },
+      { name: 'Recámara 2', url: 'http://localhost:3000/api/v1/bedrooms/last?location=Recámara 2' },
+      { name: 'Sala',       url: 'http://localhost:3000/api/v1/livingrooms/last?location=Sala' }
+    ];
+  
+    const requests = urls.map(loc =>
+      fetch(loc.url)
+        .then(res => res.json())
+        .then(data => {
+          const sensor = data.sensorsData?.find((s: any) => s.lastRecord?.readings);
+          const lectura = sensor?.lastRecord.readings.find((r: any) =>
+            r.name.toLowerCase().includes('temperatura')
+          );
+          const fechaHora = new Date(sensor?.lastRecord?.registeredDate);
+          return {
+            fecha: fechaHora.toLocaleDateString(),
+            hora: fechaHora.toLocaleTimeString(),
+            temperatura: lectura?.value ?? 0,
+            estado: loc.name
+          };
+        })
+        .catch(() => ({
+          fecha: '-', hora: '-', temperatura: 0, estado: loc.name
+        }))
+    );
+  
+    return Promise.all(requests).then(result => {
+      this.tablaData = result;
+      this.renderizarTabla();
+    });
+  }
+  
+  renderizarTabla() {
+    const tabla = ($('#tablaDatos') as any).DataTable();
+    tabla.clear();
+    this.tablaData.forEach(row => {
+      tabla.row.add([
+        row.fecha,
+        row.hora,
+        `${row.temperatura} ºC`,
+        row.estado
+      ]);
+    });
+    tabla.draw();
   }
 
   updateTime() {
@@ -188,17 +209,18 @@ export class HomePageComponent implements OnInit, OnDestroy, AfterViewInit {
   getRoomsNames() {
     this.loadingService.showLoading();
     this.roomsService.getAllRooms().subscribe((res: iApiResponse) => {
-      console.log(res);
       this.rooms = res.roomsNames;
       this.loadingService.hideLoading();
     });
   }
 
+  logout(): void {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+
   ngOnDestroy(): void {
     clearInterval(this.pollingInterval);
     this.subscription.unsubscribe();
-    if (this.chartRoot) {
-      this.chartRoot.dispose();
-    }
   }
 }

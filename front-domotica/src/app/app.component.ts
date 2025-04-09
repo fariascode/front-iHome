@@ -5,7 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingService } from './core/services/Loading/loading.service';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 import { NgChartsModule } from 'ng2-charts';
@@ -37,15 +37,25 @@ import { WindowDoubleDataItemComponent } from './components/window-double-data-i
     MatSortModule,
     DashboardComponent,  // Asegúrate de importar DashboardComponent aquí
     WindowLeftDataItemComponent,  // Importación de WindowLeftDataItemComponent
-    WindowDoubleDataItemComponent
+    WindowDoubleDataItemComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  showLayout: boolean = true;
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
-  constructor(private loadingService: LoadingService) {}
+  //constructor(private loadingService: LoadingService) {}
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const currentRoute = event.urlAfterRedirects;
+        this.showLayout = !(currentRoute.includes('/login') || currentRoute.includes('/register'));
+      }
+    });
+  }
+
 
   toggleSidenav() {
     this.sidenav.toggle();

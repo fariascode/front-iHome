@@ -1,11 +1,17 @@
 <section>
   <div>
     <!-- Fondo blanco translúcido -->
-    <div class="bg-white bg-cover" style="position: fixed; width: 100%; height: 100%; z-index: -100; opacity: 0.55;"></div>
+    <div class="bg-graym bg-cover" style="position: fixed; width: 100%; height: 100%; z-index: -100; opacity: 0.55;"></div>
 
-    <!-- Título HOME -->
-    <div class="flex flex-col md:flex-row items-center md:justify-start">
-      <h1 class="text-black text-2xl sm:text-4xl lg:text-6xl letter-logo ml-10 md:ml-28 mt-4 md:mt-6" style="letter-spacing: 0.2em;">HOME</h1>
+    <!-- Título HOME con botón cerrar sesión -->
+    <div class="flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-28">
+      <h1 class="text-black text-2xl sm:text-4xl lg:text-6xl letter-logo mt-4 md:mt-6" style="letter-spacing: 0.2em;">iHOME</h1>
+      <button
+        (click)="logout()"
+        class="mt-4 md:mt-6 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+      >
+        Cerrar sesión
+      </button>
     </div>
 
     <!-- Línea horizontal superior -->
@@ -13,16 +19,15 @@
 
     <!-- Panel de datos -->
     <div class="flex flex-col md:flex-row items-center justify-between mt-4 px-6">
-
       <!-- PRESENT MODE -->
       <div class="text-center md:text-left md:ml-12 lg:ml-28 mb-4 md:mb-0">
-        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">PRESENT MODE</h3>
+        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">BIENVENIDO</h3>
         <h4 class="text-black text-sm lg:text-lg tracking-wide mt-1">{{ currentTime }}</h4>
       </div>
 
       <!-- TEMPERATURE -->
       <div class="flex flex-col items-center text-center mb-4 md:mb-0">
-        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">TEMPERATURE</h3>
+        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">TEMPERATURA</h3>
         <h4 *ngIf="temperaturaData !== undefined" class="text-black text-2xl sm:text-3xl lg:text-4xl font-semibold mt-1">
           {{ temperaturaData }}<span class="text-black text-xl md:text-2xl">ºC</span>
         </h4>
@@ -33,7 +38,7 @@
 
       <!-- DÍA -->
       <div class="flex flex-col items-center text-center md:mr-12 lg:mr-28">
-        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide mb-2">DAY</h3>
+        <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide mb-2">DÍA</h3>
         <img src="assets/image/sun.jpg" class="h-10 sm:h-12 lg:h-16 object-contain" />
       </div>
     </div>
@@ -44,42 +49,32 @@
 
   <!-- Sección de gráficas y tablas -->
   <div class="mt-10 px-6 md:px-12 lg:px-28">
-    <h2 class="text-black text-xl sm:text-2xl lg:text-3xl font-semibold mb-6">Gráficas y Tablas</h2>
+    <h2 class="text-black text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 border-b-4 border-[#C9C39A] w-fit pb-2">Gráficas y Tablas</h2>
 
-    <!-- Gráfica de línea - Temperatura Histórica -->
-    <div class="bg-white bg-opacity-80 p-4 rounded-lg shadow-md mb-10">
-      <h3 class="text-black text-lg font-medium mb-4">Temperatura Histórica</h3>
-      <div id="amchart-container" class="w-full h-64 sm:h-96"></div>
-    </div>
-
-    <!-- NUEVA: Gráfica de barras - Temperatura Promedio por Recámara -->
-    <div class="bg-white bg-opacity-80 p-4 rounded-lg shadow-md mb-10">
-      <h3 class="text-black text-lg font-medium mb-4">Temperatura Promedio - Recámaras</h3>
-      <div id="bar-chart-container" class="w-full h-64 sm:h-96"></div>
+    <!-- Gráfica de barras -->
+    <div class="bg-white bg-opacity-90 backdrop-blur-md p-6 rounded-xl shadow-lg mb-10 hover:shadow-2xl transition-all duration-300">
+      <h3 class="text-gray-800 text-xl font-semibold mb-4 flex items-center gap-2">
+        📊 Temperatura Promedio - Habitaciones
+      </h3>
+      <div id="bar-chart-container" class="w-full h-64 sm:h-96 rounded-lg border border-gray-300"></div>
     </div>
 
     <!-- Tabla de datos recientes -->
-    <div class="bg-white bg-opacity-80 p-4 rounded-lg shadow-md">
-      <h3 class="text-black text-lg font-medium mb-4">Datos Recientes</h3>
-      <div class="overflow-x-auto">
-        <table id="tablaDatos" class="min-w-full border text-sm text-left text-black">
-          <thead class="bg-[#C9C39A] text-white">
+    <div class="bg-white bg-opacity-90 backdrop-blur-md p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+      <h3 class="text-gray-800 text-xl font-semibold mb-4 flex items-center gap-2">
+        🗂 Datos Recientes
+      </h3>
+      <div class="overflow-x-auto rounded-lg border border-gray-300">
+        <table id="tablaDatos" class="min-w-full text-sm text-left text-gray-700">
+          <thead class="bg-[#C9C39A] text-white text-base">
             <tr>
-              <th class="px-4 py-2">Fecha</th>
-              <th class="px-4 py-2">Hora</th>
-              <th class="px-4 py-2">Temperatura (ºC)</th>
-              <th class="px-4 py-2">Estado</th>
+              <th class="px-6 py-3">📅 Fecha</th>
+              <th class="px-6 py-3">⏰ Hora</th>
+              <th class="px-6 py-3">🌡 Temperatura</th>
+              <th class="px-6 py-3">☀ Estado</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td class="px-4 py-2">08/04/2025</td>
-              <td class="px-4 py-2">10:00 AM</td>
-              <td class="px-4 py-2">25.3</td>
-              <td class="px-4 py-2">Soleado</td>
-            </tr>
-            <!-- Más filas dinámicas aquí si lo deseas -->
-          </tbody>
+          <tbody></tbody> <!-- IMPORTANTE: tbody vacío para DataTables -->
         </table>
       </div>
     </div>
