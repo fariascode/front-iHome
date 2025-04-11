@@ -7,6 +7,7 @@ import { LoadingService } from './core/services/Loading/loading.service';
 import { MatButtonModule } from '@angular/material/button';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { FormsModule } from '@angular/forms';
 
 import { NgChartsModule } from 'ng2-charts';
 import { MatTableModule } from '@angular/material/table';
@@ -38,6 +39,7 @@ import { WindowDoubleDataItemComponent } from './components/window-double-data-i
     DashboardComponent,  // Asegúrate de importar DashboardComponent aquí
     WindowLeftDataItemComponent,  // Importación de WindowLeftDataItemComponent
     WindowDoubleDataItemComponent,
+    FormsModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

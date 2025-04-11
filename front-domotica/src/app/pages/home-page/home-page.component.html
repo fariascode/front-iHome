@@ -1,38 +1,20 @@
 <section>
   <div>
-    <!-- Fondo blanco translúcido -->
-    <div style="
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: -100;
-  background: linear-gradient(to bottom right, #d6e4f0, #f0f4f8);
-  opacity: 0.65;
-"></div>
+    <div style="position: fixed; width: 100%; height: 100%; z-index: -100; background: linear-gradient(to bottom right, #d6e4f0, #f0f4f8); opacity: 0.65;"></div>
 
-    <!-- Título HOME con botón cerrar sesión -->
     <div class="flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-28">
       <h1 class="text-black text-2xl sm:text-4xl lg:text-6xl letter-logo mt-4 md:mt-6" style="letter-spacing: 0.2em;">iHOME</h1>
-      <button
-        (click)="logout()"
-        class="mt-4 md:mt-6 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
-      >
-        Cerrar sesión
-      </button>
+      <button (click)="logout()" class="mt-4 md:mt-6 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Cerrar sesión</button>
     </div>
 
-    <!-- Línea horizontal superior -->
     <div class="bg-[#C9C39A] mx-[5%]" style="height: 2px; margin-top: 1rem;"></div>
 
-    <!-- Panel de datos -->
     <div class="flex flex-col md:flex-row items-center justify-between mt-4 px-6">
-      <!-- PRESENT MODE -->
       <div class="text-center md:text-left md:ml-12 lg:ml-28 mb-4 md:mb-0">
         <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">BIENVENIDO</h3>
         <h4 class="text-black text-sm lg:text-lg tracking-wide mt-1">{{ currentTime }}</h4>
       </div>
 
-      <!-- TEMPERATURE -->
       <div class="flex flex-col items-center text-center mb-4 md:mb-0">
         <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide">TEMPERATURA</h3>
         <h4 *ngIf="temperaturaData !== undefined" class="text-black text-2xl sm:text-3xl lg:text-4xl font-semibold mt-1">
@@ -40,25 +22,20 @@
         </h4>
       </div>
 
-      <!-- Línea vertical mejorada -->
       <div class="hidden md:block bg-[#C9C39A] w-[3px] h-20 mx-4"></div>
 
-      <!-- DÍA -->
       <div class="flex flex-col items-center text-center md:mr-12 lg:mr-28">
         <h3 class="text-black letter-normal text-sm sm:text-lg lg:text-xl tracking-wide mb-2">DÍA</h3>
         <img src="assets/image/sun.jpg" class="h-10 sm:h-12 lg:h-16 object-contain" />
       </div>
     </div>
 
-    <!-- Línea horizontal inferior -->
     <div class="bg-[#C9C39A] mx-[5%]" style="height: 2px; margin-top: 1.5rem;"></div>
   </div>
 
-  <!-- Sección de gráficas y tablas -->
   <div class="mt-10 px-6 md:px-12 lg:px-28">
     <h2 class="text-black text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 border-b-4 border-[#C9C39A] w-fit pb-2">Gráficas y Tablas</h2>
 
-    <!-- Gráfica de barras -->
     <div class="bg-white bg-opacity-90 backdrop-blur-md p-6 rounded-xl shadow-lg mb-10 hover:shadow-2xl transition-all duration-300">
       <h3 class="text-gray-800 text-xl font-semibold mb-4 flex items-center gap-2">
         📊 Temperatura Promedio - Habitaciones
@@ -66,7 +43,6 @@
       <div id="bar-chart-container" class="w-full h-64 sm:h-96 rounded-lg border border-gray-300"></div>
     </div>
 
-    <!-- Tabla de datos recientes -->
     <div class="bg-white bg-opacity-80 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-[#C9C39A] transition-all duration-300">
       <h3 class="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-2 drop-shadow-sm">
         📋 Datos Recientes
@@ -82,8 +58,6 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <!-- DataTables llenará esto -->
-            <!-- Ejemplo para visualizar el diseño mientras -->
             <tr class="hover:bg-[#fefae0] transition-all duration-200 ease-in-out odd:bg-gray-50">
               <td class="px-6 py-4">2025-04-10</td>
               <td class="px-6 py-4">14:00</td>
@@ -93,6 +67,51 @@
           </tbody>
         </table>
       </div>
-    </div>    
+    </div>
+
+    <!-- Tabla por habitación con diseño igual que Datos Recientes -->
+<div class="bg-white bg-opacity-80 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-[#C9C39A] transition-all duration-300 mt-10">
+  <h3 class="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-2 drop-shadow-sm">
+    🛏 Datos por Habitación
+  </h3>
+
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+    <label class="text-lg font-semibold text-gray-800">Selecciona una habitación:</label>
+    <select [(ngModel)]="selectedRoom" (change)="filtrarPorHabitacion()" class="p-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C9C39A]">
+      <option *ngFor="let room of habitaciones" [value]="room">{{ room }}</option>
+    </select>
+  </div>
+
+  <div class="overflow-x-auto rounded-xl">
+    <table id="tablaFiltrada" class="min-w-full text-sm text-gray-800">
+      <thead class="bg-gradient-to-r from-[#C9C39A] to-[#E5DD9E] text-white text-base shadow-md">
+        <tr>
+          <th class="px-6 py-4 text-left tracking-wider">📅 Fecha</th>
+          <th class="px-6 py-4 text-left tracking-wider">⏰ Hora</th>
+          <th class="px-6 py-4 text-left tracking-wider">🧪 Tipo</th>
+          <th class="px-6 py-4 text-left tracking-wider">🔌 Nombre</th>
+          <th class="px-6 py-4 text-left tracking-wider">📍 Ubicación</th>
+          <th class="px-6 py-4 text-left tracking-wider">📈 Lecturas / Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr *ngFor="let item of registrosFiltrados" class="hover:bg-[#fefae0] transition-all duration-200 ease-in-out odd:bg-gray-50">
+          <td class="px-6 py-4">{{ item.fecha }}</td>
+          <td class="px-6 py-4">{{ item.hora }}</td>
+          <td class="px-6 py-4">{{ item.tipo }}</td>
+          <td class="px-6 py-4">{{ item.nombre }}</td>
+          <td class="px-6 py-4">{{ item.ubicacion }}</td>
+          <td class="px-6 py-4">
+            <ul class="list-disc ml-5">
+              <li *ngFor="let lectura of item.lecturas">
+                {{ lectura.name }}: {{ lectura.value }} {{ lectura.measurementUnit || '' }}
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
   </div>
 </section>
